@@ -1,4 +1,4 @@
-package ru.evo.calc.model;
+package ru.evo.calc.dao.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,33 +15,27 @@ public class CalcLog implements Serializable {
     private String expression;
     private String result;
 
-    public Integer getId()
-    {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id)
-    {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getExpression()
-    {
+    public String getExpression() {
         return expression;
     }
 
-    public void setExpression(String expression)
-    {
+    public void setExpression(String expression) {
         this.expression = expression;
     }
 
-    public String getResult()
-    {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(String result)
-    {
+    public void setResult(String result) {
         this.result = result;
     }
 

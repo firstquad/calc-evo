@@ -1,11 +1,11 @@
 <%@ page import="java.util.*, java.text.*" %>
 <%@ page import="ru.evo.calc.*" %>
 <%@ page import="ru.evo.calc.service.Validation" %>
-<%@ page import="ru.evo.calc.service.ReverseNote" %>
+<%@ page import="ru.evo.calc.service.util.ReverseNoteUtil" %>
 <%@ page import="ru.evo.calc.service.Resolve" %>
-<%@ page import="ru.evo.calc.model.CalcLog" %>
-<%@ page import="ru.evo.calc.dao.CalcLogDAO" %>
-<%@ page import="ru.evo.calc.dao.CalcLogDAOImpl" %>
+<%@ page import="ru.evo.calc.dao.model.CalcLog" %>
+<%@ page import="ru.evo.calc.dao.api.CalcLogDAO" %>
+<%@ page import="ru.evo.calc.dao.impl.CalcLogDAOImpl" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html; ISO-8859-1; charset=windows-1251" %>
 <html>
@@ -32,13 +32,13 @@
     <%! String wrongSign;%>
 
     <%
-        ReverseNote st = new ReverseNote();
+        ReverseNoteUtil st = new ReverseNoteUtil();
         Resolve solve = new Resolve();
         Validation validate = new Validation();
         String in_exp = request.getParameter("expresion");
         if (in_exp != null) {
             if (Objects.equals(validate.checkBracets(in_exp), "Brackets checked")) {
-                wrongSign = validate.getWrongSign(st.getReverseNote(st.doEdit(request.getParameter("expresion"))));
+                wrongSign = validate.validate(st.convertToReverseNote(st.processExpression(request.getParameter("expresion"))));
             } else {
                 wrongSign = validate.checkBracets(in_exp);
             }
@@ -49,15 +49,15 @@
         if (request.getParameter("expresion") == null || !"-".equals(wrongSign) || request.getParameter("expresion").equals("")) {
             res = "Нет";
         } else {
-            res = solve.getResolve(st.getReverseNote(st.doEdit(request.getParameter("expresion"))), request.getParameter("expresion"));
-            wrongSign = validate.getInfinity(res);
+            res = solve.calculate(st.convertToReverseNote(st.processExpression(request.getParameter("expresion"))));
+            wrongSign = validate.checkInfinity(res);
         }
 
 
     %>
     <%--<INPUT type="text" name="result" size="25" <%out.println("value=" + wrongSign);%>><BR>--%>
 
-    <%--Обратная запись с разделителем: <INPUT type="text" name="result" size="25" <%out.println("value=" + st.getReverseNote(st.doEdit(request.getParameter("expresion"))));%>><BR>--%>
+    <%--Обратная запись с разделителем: <INPUT type="text" name="result" size="25" <%out.println("value=" + st.convertToReverseNote(st.processExpression(request.getParameter("expresion"))));%>><BR>--%>
 
     Результат: <INPUT type="text" name="result" size="40" <%out.println("value=" + res);%>><BR>
 
@@ -88,6 +88,7 @@
 
     <script type="text/javascript">
         function clearResult() {
+            document.form1.getElementById("expresion").value = "0";
             document.form1.getElementById("result").value = "0";
         }
     </script>

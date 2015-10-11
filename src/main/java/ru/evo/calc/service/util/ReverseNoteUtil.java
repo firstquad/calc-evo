@@ -1,16 +1,15 @@
-package ru.evo.calc.service;
+package ru.evo.calc.service.util;
 
 import java.util.Stack;
 
-public class ReverseNote
+public class ReverseNoteUtil
 {
-    public String getReverseNote(String expression) {
-
-        //Перевод в постфиксную нотацию
+    //Перевод в постфиксную нотацию
+    public static String convertToReverseNote(String expression) {
+        expression = processExpression(expression);
         String reverseNote = "";
-        final Stack stack = new Stack();
-        final Stack outString = new Stack();
-
+        final Stack<Character> stack = new Stack<>();
+        final Stack<Character> outString = new Stack<>();
         for (int i = 0; i < expression.length(); i++) {
             if (expression.charAt(i) == ')') {
                 while (String.valueOf(stack.peek()).charAt(0) != '(') {
@@ -41,9 +40,8 @@ public class ReverseNote
                 }
             }
         }
-        for (int j = 0; j < outString.size(); j++) {
-            reverseNote = reverseNote + String.valueOf(outString.get(j));
-
+        for (Character anOutString : outString) {
+            reverseNote = reverseNote + String.valueOf(anOutString);
         }
         reverseNote = reverseNote.replace("_*", "*"); reverseNote = reverseNote.replace("_^", "^"); reverseNote = reverseNote.replace("_/", "/");
         reverseNote = reverseNote.replace("_-", "-"); reverseNote = reverseNote.replace("_+", "+");
@@ -51,17 +49,21 @@ public class ReverseNote
     }
 
     //Добавление разделителей
-    public String doEdit(String expression){
+    public static String processExpression(String expression){
         expression = "(" + expression + ")";
-        expression = expression.replace("(-", "(0-"); expression = expression.replace(" ", "");
-        expression = expression.replace("(+", "(0+"); expression = expression.replace("+", "_+");
-        expression = expression.replace("-", "_-");   expression = expression.replace("/", "_/");
-        expression = expression.replace("*", "_*");   expression = expression.replace("^", "_^");
+        expression = expression.replace(" ", "");
+        expression = expression.replace("(-", "(0-");
+        expression = expression.replace("(+", "(0+");
+        expression = expression.replace("+", "_+");
+        expression = expression.replace("-", "_-");
+        expression = expression.replace("/", "_/");
+        expression = expression.replace("*", "_*");
+        expression = expression.replace("^", "_^");
         return expression;
     }
 
     //Приоритет операций
-    private int priority(final char op) {
+    private static int priority(final char op) {
         switch (op) {
             case '^':
                 return 4;

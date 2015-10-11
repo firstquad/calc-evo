@@ -1,4 +1,4 @@
-package ru.evo.util;
+package ru.evo.calc.dao.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

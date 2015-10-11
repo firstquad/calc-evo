@@ -1,10 +1,11 @@
-package ru.evo.calc.dao;
+package ru.evo.calc.dao.impl;
 
 import org.hibernate.Session;
-import ru.evo.calc.model.CalcLog;
-import ru.evo.util.HiberUtil;
+import ru.evo.calc.dao.api.CalcLogDAO;
+import ru.evo.calc.dao.model.CalcLog;
+import ru.evo.calc.dao.util.HiberUtil;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,10 +17,7 @@ public class CalcLogDAOImpl implements CalcLogDAO {
         return session;
     }
 
-    public void closeSession(){
-        session.close();
-    }
-
+    @SuppressWarnings("unchecked")
     public List<CalcLog> getAll() throws SQLException {
         return openSession().createCriteria(CalcLog.class).list();
     }
@@ -28,6 +26,10 @@ public class CalcLogDAOImpl implements CalcLogDAO {
         session.beginTransaction();
         session.save(calcLog);
         session.getTransaction().commit();
+    }
+
+    public void closeSession() {
+        session.close();
     }
 
 }
