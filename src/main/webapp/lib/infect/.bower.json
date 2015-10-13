@@ -1,0 +1,37 @@
+{
+    "name": "infect",
+    "main": "infect.js",
+    "homepage": "https://github.com/amwmedia/infect.js",
+    "authors": [
+        "Andrew Worcester <andrew@amwmedia.com>"
+    ],
+    "description": "Infect.js is a simple way to add the magic of dependency injection to any web project, regardless of the framework on which you choose to write your application. It's infectiously simple!",
+    "keywords": [
+        "dependency injection",
+        "dependency",
+        "injection",
+        "di",
+        "inverse of control",
+        "ioc",
+        "inject",
+        "infect"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "_release": "d2b8194f8d",
+    "_resolution": {
+        "type": "branch",
+        "branch": "master",
+        "commit": "d2b8194f8dca8f94232a2e32a6417298f643d318"
+    },
+    "_source": "https://github.com/zoh/infect.js.git",
+    "_target": "*",
+    "_originalSource": "https://github.com/zoh/infect.js.git",
+    "_direct": true
+}

@@ -5,14 +5,15 @@ import ru.evo.calc.dao.impl.CalcLogDAOImpl;
 import ru.evo.calc.service.Resolve;
 import ru.evo.calc.service.Validation;
 import ru.evo.calc.service.util.ReverseNoteUtil;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+@WebServlet("/calc")
 public class CalcServlet extends HttpServlet {
 
     @Override
