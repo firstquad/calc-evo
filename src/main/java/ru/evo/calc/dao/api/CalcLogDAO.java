@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CalcLogDAO {
 
-    List<CalcLog> getAll() throws SQLException;
+    List<CalcLog> getAll();
 
-    void save(CalcLog calcLog) throws SQLException;
+    void save(CalcLog calcLog);
 }

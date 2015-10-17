@@ -1,6 +1,8 @@
 package ru.evo.calc.dao.impl;
 
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.evo.calc.dao.api.CalcLogDAO;
 import ru.evo.calc.dao.model.CalcLog;
 import ru.evo.calc.dao.util.HiberUtil;
@@ -10,6 +12,7 @@ import java.util.List;
 
 
 public class CalcLogDAOImpl implements CalcLogDAO {
+    Logger logger = LoggerFactory.getLogger(CalcLogDAOImpl.class);
     private Session session = openSession();
 
     public Session openSession() {
@@ -18,7 +21,7 @@ public class CalcLogDAOImpl implements CalcLogDAO {
     }
 
     @SuppressWarnings("unchecked")
-    public List<CalcLog> getAll() throws SQLException {
+    public List<CalcLog> getAll() {
         return openSession().createCriteria(CalcLog.class).list();
     }
 
