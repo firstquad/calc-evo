@@ -5,7 +5,7 @@ function clearResult() {
 function calculate(){
     var xhr = new XMLHttpRequest();
     var body = 'expression=' + encodeURIComponent(document.getElementById("expression").value);
-    xhr.open("POST", '/calc', true)
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhr.open("POST", '/calc', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(body);
 }

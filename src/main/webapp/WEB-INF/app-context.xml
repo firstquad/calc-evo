@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns="http://www.springframework.org/schema/security"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+        xmlns:security="http://www.springframework.org/schema/security"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
               http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-               http://www.springframework.org/schema/security
-                http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+              http://www.springframework.org/schema/security
+              http://www.springframework.org/schema/security/spring-security-3.1.xsd
+              http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="username" password="password" authorities="ROLE_USER"/>
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
 
-    <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/login*" access="isAnonymous()"/>
-        <intercept-url pattern="/**" access="isAuthenticated()"/>
-        <form-login
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <context:annotation-config/>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="admin" password="admin" authorities="ROLE_USER"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <security:http auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/login*" access="isAnonymous()"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+        <security:form-login
                 login-page='/login.jsp'
                 login-processing-url="/static/j_spring_security_check"
                 default-target-url="/calc"
                 authentication-failure-url="/login.jsp?error=true"
                 always-use-default-target="true"/>
-    </http>
+    </security:http>
 
-</beans:beans>
+    <jaxrs:server id="rest" address="/service">
+        <jaxrs:serviceBeans>
+            <bean class="ru.evo.calc.service.rest.ResolveRestService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <bean id="jsonProvider"
+          class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+
+</beans>

@@ -12,11 +12,12 @@
 <h3>Вычислитель арифметических выражений</h3>
 
 <FORM method="post">
-    <label> Ввод:</label><INPUT type="text" id="expression" name="expression" value="0" size="40" maxlength="60">&nbsp;&nbsp;&nbsp;&nbsp;
+    <label> Ввод:</label><INPUT type="text" id="expression" name="expression" value="0" size="40" maxlength="60"
+                                title="Введите выражение">&nbsp;&nbsp;&nbsp;&nbsp;
     <label>Результат: </label><INPUT type="text" id="result" name="result" size="40"
-                                     value="<%out.println(request.getAttribute("result"));%>"
-                                     onreset="clearResult();"><BR>
-    <button type="button" onclick="calculate();" class="btn btn-default btn-lg">
+                                     value="<%=request.getAttribute("result") == null ? '0' : request.getAttribute("result")%>"
+                                     title="Результат вычисления"><BR>
+    <button type="submit" <%--onclick="calculate();" --%> class="btn btn-default btn-lg" onclick="">
         <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
         Вычислить
     </button>
@@ -28,6 +29,7 @@
     <br>
     <table class="table">
         <caption> История</caption>
+
         <thead>
         <tr>
             <th>№</th>
